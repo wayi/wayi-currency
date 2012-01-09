@@ -91,7 +91,8 @@ function callback(data){
 		writeback("Transaction Completed! </br></br>"
 			+ "Data returned from F8D: </br>"
 			+ "<b>Order ID: </b>" + data['orderid'] + "</br>"
-			+ "<b>Status: </b>" + data['status']);
+			+ "<b>Status: </b>" + data['status'] + "</br>"
+			+ "<b>All Info: </b>" + JSON.stringify(data));
 	} else if (data['error_code']) {
 		writeback("Transaction Failed! </br></br>"
 			+ "Error message returned from Facebook:</br>"
