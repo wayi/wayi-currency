@@ -4,8 +4,7 @@ define('APP_ID', '411');
 define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
 
 //1.include
-include '../componments/php-sdk/src/fun.php';
-
+include 'php-sdk/src/fun.php';
 
 //2.基本設定
 $config_411 = array(
@@ -20,7 +19,6 @@ $fun = new FUN($config);
 
 //4.取得並夾帶access token
 $session = $fun->getSession();      
-// Login or logout url will be needed depending on current user state.
 if($session){
 	$serial = $fun->getCurrencySerial();
 } else {
