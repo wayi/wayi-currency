@@ -3,7 +3,7 @@ jQuery('head').append('<script type="text/javascript" src="http://api.fun.wayi.c
 	(function($) {
 		var config = {
 			'f8d_web':	'http://funtest.fun.wayi.com.tw/',
-			'f8d_api':	'http://10.0.2.106/kevyu/api/webapi/'	//'http://apitest.fun.wayi.com.tw/'
+			'f8d_api':	'http://apitest.fun.wayi.com.tw/'
 	};
 
 	jQuery.fn.extend({ curReturn: null, jQueryInit: jQuery.fn.init });
@@ -66,7 +66,7 @@ jQuery('head').append('<script type="text/javascript" src="http://api.fun.wayi.c
 			access_token = options[0].access_token;
 		},
 		ui: function(elems, options){
-			jQuery('head').append('<link rel="stylesheet" type="text/css" href="http://apitest.fun.wayi.com.tw/assets/jqplugin/f8d.css?v=20120109" />');
+			jQuery('head').append('<link rel="stylesheet" type="text/css" href="'+config.f8d_api+'assets/jqplugin/f8d.css?v=20120109" />');
 			options[0].src = config.f8d_api + 'ui';
 			options[0].to = 'small'; //small dialog
 			options[0].dialogName = 'F8D_dialog';

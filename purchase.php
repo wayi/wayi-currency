@@ -6,7 +6,6 @@ define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
 //1.include
 include 'php-sdk/src/fun.php';
 
-
 //2.基本設定
 $config_411 = array(
 	'appId'  	=> APP_ID,                                 //your app id
@@ -20,13 +19,11 @@ $fun = new FUN($config);
 
 //4.取得並夾帶access token
 $session = $fun->getSession();      
-// Login or logout url will be needed depending on current user state.
 if($session){
 	$serial = $fun->getCurrencySerial();
 } else {
 	$serial = '';
 }
-
 
 define('ACCESS_TOKEN', $fun->getAccessToken());
 define('SERIAL',$serial);
@@ -65,7 +62,6 @@ define('SERIAL',$serial);
 $(function(){
 	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>", serial: "<?php echo SERIAL;?>"});
 });	
-
 //place an order
 function placeOrder(itemid,title, price, desc , img_url, product_url) {
 	// Only send param data for sample. These parameters should be set
@@ -90,7 +86,6 @@ function placeOrder(itemid,title, price, desc , img_url, product_url) {
 	$('body').F8D.ui(obj, callback);
 }
 
-//handle callback
 function callback(data){
 	if (data['orderid']) {
 		writeback("Transaction Completed! </br></br>"
