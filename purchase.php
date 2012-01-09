@@ -1,14 +1,18 @@
 <?php
+//Enter your APP ID below
+define('APP_ID', '411');
+define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
+
 //1.include
 include '../componments/php-sdk/src/fun.php';
 
+
 //2.基本設定
 $config_411 = array(
-	'appId'  	=> '411',                                 //your app id
-	'secret' 	=> '33f2c72705bfaabbef82b142a489412c',
+	'appId'  	=> APP_ID,                                 //your app id
+	'secret' 	=> APP_SECRET,
 	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php',
-	'testing'	=> true,
-	'keepCookie'	=> false
+	'testing'	=> true
 );
 //3.實體化
 $config = $config_411;
@@ -18,18 +22,11 @@ $fun = new FUN($config);
 $session = $fun->getSession();      
 // Login or logout url will be needed depending on current user state.
 if($session){
-	$logoutUrl = $fun->getLogoutUrl();
-//	echo sprintf('<a href="%s">logout</a>',$logoutUrl);
 	$serial = $fun->getCurrencySerial();
 } else {
-	$loginUrl = $fun->getLoginUrl($config);
-	//	echo sprintf('<a href="%s">login</a>',$loginUrl);
 	$serial = '';
 }
 
-
-//Enter your APP ID below
-define('APP_ID', '411');
 define('ACCESS_TOKEN', $fun->getAccessToken());
 define('SERIAL',$serial);
 ?>
@@ -48,13 +45,13 @@ define('SERIAL',$serial);
 		<td style="text-align:right;">1 <img src="gold.gif" /></td>
 		<td >2 WGS points (測WGS)</td>
 		<td>
-<a onclick="placeOrder('ITEM0001','1遊戲幣','1遊戲幣 = 2 WGS',100,'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="placeOrder('ITEM0001','1遊戲幣',100 ,'1遊戲幣 = 2 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 	<tr>
 		<td style="text-align:right;">1000 <img src="gold.gif" /></td>
 		<td>1000 WGS points (測餘額不足)</td>
 		<td>
-<a onclick="placeOrder('ITEM0002','1遊戲幣','1 遊戲幣 = 1 WGS',1000,'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="placeOrder('ITEM0002','1000遊戲幣',1000, '1 遊戲幣 = 1 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 
 </table>
@@ -67,8 +64,8 @@ define('SERIAL',$serial);
 $(function(){
 	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>", serial: "<?php echo SERIAL;?>"});
 });	
-
-function placeOrder(itemid,title, desc, price , img_url, product_url) {
+//place an order
+function placeOrder(itemid,title, price, desc , img_url, product_url) {
 	// Only send param data for sample. These parameters should be set
 	// in the callback.
 	var order_info = {
