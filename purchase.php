@@ -4,7 +4,7 @@ define('APP_ID', '411');
 define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
 
 //1.include
-include '../componments/php-sdk/src/fun.php';
+include 'php-sdk/src/fun.php';
 
 
 //2.基本設定
@@ -96,7 +96,8 @@ function callback(data){
 		writeback("Transaction Completed! </br></br>"
 			+ "Data returned from F8D: </br>"
 			+ "<b>Order ID: </b>" + data['orderid'] + "</br>"
-			+ "<b>Status: </b>" + data['status']);
+			+ "<b>Status: </b>" + data['status'] + "</br>"
+			+ "<b>All Info: </b>" + JSON.stringify(data));
 	} else if (data['error_code']) {
 		writeback("Transaction Failed! </br></br>"
 			+ "Error message returned from Facebook:</br>"
