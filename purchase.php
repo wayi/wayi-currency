@@ -7,14 +7,13 @@ define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
 include 'php-sdk/src/fun.php';
 
 //2.基本設定
-$config_411 = array(
+$config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
 	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php',
 	'testing'	=> true
 );
 //3.實體化
-$config = $config_411;
 $fun = new FUN($config);
 
 //4.取得並夾帶access token
@@ -31,7 +30,8 @@ define('SERIAL',$serial);
 <html>
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="f8d.js?v=12235"></script>
+	<script type="text/javascript" src="api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
+	<!--<script type="text/javascript" src="../webapi/assets/jqplugin/f8d.js?v=12235"></script>-->
 
 </head>
 <body>
@@ -95,7 +95,7 @@ function callback(data){
 			+ "<b>All Info: </b>" + JSON.stringify(data));
 	} else if (data['error_code']) {
 		writeback("Transaction Failed! </br></br>"
-			+ "Error message returned from Facebook:</br>"
+			+ "Error message returned from F8D:</br>"
 			+ data['error_message']);
 	} else {
 		writeback("Transaction failed! </br>"
