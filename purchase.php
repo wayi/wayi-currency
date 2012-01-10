@@ -30,7 +30,7 @@ define('SERIAL',$serial);
 <html>
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
+	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
 	<!--<script type="text/javascript" src="../webapi/assets/jqplugin/f8d.js?v=12235"></script>-->
 
 </head>
