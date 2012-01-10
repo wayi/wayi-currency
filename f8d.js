@@ -1,3 +1,9 @@
+/*
+ *      f8d.js
+ *      version: 1.0.2
+ *      updated: 2012/1/10
+ */
+
 jQuery('head').append('<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/jquery.ba-postmessage.min.js?v=20111020"/>');
 
 	(function($) {
