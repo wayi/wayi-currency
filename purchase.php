@@ -10,8 +10,7 @@ include 'php-sdk/src/fun.php';
 $config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php',
-	'testing'	=> true
+	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php'
 );
 //3.實體化
 $fun = new FUN($config);
@@ -19,13 +18,11 @@ $fun = new FUN($config);
 //4.取得並夾帶access token
 $session = $fun->getSession();      
 if($session){
-	$serial = $fun->getCurrencySerial();
+	define('ACCESS_TOKEN', $fun->getAccessToken());
 } else {
-	$serial = '';
+	die('[F8D] SDK get session failed, please confirm your config');
 }
 
-define('ACCESS_TOKEN', $fun->getAccessToken());
-define('SERIAL',$serial);
 ?>
 <html>
 	<head>
@@ -35,7 +32,7 @@ define('SERIAL',$serial);
 
 </head>
 <body>
-<h1>降龍之劍 儲值遊戲幣</h1>
+<h1>Wayi金流 儲值遊戲幣範例</h1>
 <table border=1>
 	<caption>儲值金額</caption>
 	<th>遊戲幣</th><th>點數</th><th></th>
@@ -60,7 +57,7 @@ define('SERIAL',$serial);
 
 <script type="text/javascript">
 $(function(){
-	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>", serial: "<?php echo SERIAL;?>"});
+	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
 });	
 //place an order
 function placeOrder(itemid,title, price, desc , img_url, product_url) {

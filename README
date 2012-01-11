@@ -1,3 +1,6 @@
-There are 2 files for F8D currency.
+f8d currency example
 	-purchase.php
 	-callback.php
+
+f8d php-sdk
+	php-sdk/src/fun.php
