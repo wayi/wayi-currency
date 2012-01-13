@@ -18,7 +18,7 @@ if (!function_exists('json_decode')) {
 
 class FUN
 {
-	const API_VERSION = '1.4.3';
+	const API_VERSION = '1.5.0';
 	/**
 	 * API_URL
 	 */
@@ -116,11 +116,24 @@ class FUN
 
 		$session = array();
 
-		if (isset($_SESSION[$this->getCookieName()])){
-			$this->logger->info('[getSession] get session form session' . $this->getCookieName());
+		/*
+		 *	session fetching seq
+		 *	1.get session from request first, if it's sns iframe it will get f8d 
+		 *	2.then session from sdk
+		 */ 
+		if (isset($_REQUEST['session'])){
+			$this->logger->info('[getSession] get session form fun session');
+			$session = json_decode(
+					get_magic_quotes_gpc()
+					? stripslashes(urldecode($_REQUEST['session']))
+					: urldecode($_REQUEST['session']),
+					true
+					);
+		}else if (isset($_SESSION[$this->getCookieName()])){
+			$this->logger->info('[getSession] get session form sdk session' . $this->getCookieName());
 			$session = $_SESSION[$this->getCookieName()];
 		}else if ( $this->keepCookie && isset($_COOKIE[$this->getCookieName()])){
-			$this->logger->info('[getSession] get session form cookie ' . $this->getCookieName());
+			$this->logger->info('[getSession] get session form sdk cookie ' . $this->getCookieName());
 			$session = json_decode( stripslashes($_COOKIE[$this->getCookieName()]), true);
 		}else if (isset($_GET['code'])){
 			$this->logger->info('[getSession] get code');
@@ -141,22 +154,6 @@ class FUN
 			}
 
 			$session = $result;
-
-		}else if (isset($_REQUEST['session'])){
-			$this->logger->info('[getSession] get session form fun session');
-			$session = json_decode(
-					get_magic_quotes_gpc()
-					? stripslashes(urldecode($_REQUEST['session']))
-					: urldecode($_REQUEST['session']),
-					true
-					);
-		}
-
-		//if currency is on, check is it vaild and append serial
-		if(isset($_REQUEST['serial'])){
-			$session = (array)$session;
-			$session['serial'] = $_REQUEST['serial'];
-			$this->logger->info('[getSession] serial done');
 		}
 
 		//if session
@@ -165,25 +162,27 @@ class FUN
 			$this->setSession($session);
 		}
 
-		if($this->isCurrencyMode() && !$this->getCurrencySkey()){
-			$this->logger->warn('[getSession] get currency failed');
+		return ($this->session)?$this->session:false;
+	}
+
+	function verify_token($access_token){
+		$path = '/oauth/verify_access_token';
+		$method ='GET';
+		$params = array('access_token'=> $access_token);
+
+		try{
+			$result = json_decode($this->makeRequest($this->getUrl($path), $params, $method),true);
+		}catch(ApiException $ex){
+			$this->logger->info(sprintf('[verify token] token invalid(%s)', print_r($ex,true)));
+			$this->clearCookie($this->getCookieName());
 			return false;
 		}
-
-		return ($session)?$session:false;
+		return true;
 	}
+
 
 	function isCurrencyMode(){
 		return isset($this->config['currency']);
-	}
-
-	function getCurrencySerial(){
-		//echo $_SESSION['fun']['api']['serial'];
-		if(isset($this->session['serial'])){
-			return $this->session['serial'];
-		}
-		return false;
-
 	}
 
 	function getCurrencyUrl(){
@@ -206,6 +205,12 @@ class FUN
 	 */
 	public function setSession($session=null) {
 		$this->session = (array) $session;	//casting type will preventing avoiding object or array type
+		if(!$this->verify_token(urldecode($this->session['access_token']))){
+			$this->session=null;
+			$this->clearCookie($this->getCookieName());
+			return;
+		}
+
 		$_SESSION[$this->getCookieName()] = $this->session;
 		$this->setCookie($this->getCookieName(), json_encode($this->session));
 	}
@@ -249,7 +254,7 @@ class FUN
 	 */
 	function getCookieName(){
 		$env = ($this->testing)?"testing":"production";
-		return sprintf('fun_%s_%s', $this->getAppId(), $env);
+		return sprintf('F8D_%s', $env);
 	}
 	public function logout(){
 		$this->logger->info(sprintf('[logout] unset cookie(%s)', $this->getCookieName()));
@@ -395,7 +400,7 @@ class FUN
 	private function clearCookie($name) {
 		$this->logger->info(sprintf('[clear session] session(%s)' , $name));
 		session_unset();
-		session_destroy();
+		//session_destroy();
 
 		$this->logger->info(sprintf('[clear cookie] cookie(%s)' , $name));
 		setcookie($name, '');

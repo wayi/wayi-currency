@@ -18,9 +18,10 @@ $fun = new FUN($config);
 //4.取得並夾帶access token
 $session = $fun->getSession();      
 if($session){
+//	$fun->api('v1/me/user');
 	define('ACCESS_TOKEN', $fun->getAccessToken());
 } else {
-	die('[F8D] SDK get session failed, please confirm your config');
+	die('<a href="'.$fun->getLoginUrl($config['redirect_uri']).'">login F8D</a>');
 }
 
 ?>
@@ -40,7 +41,7 @@ if($session){
 		<td style="text-align:right;">1 <img src="gold.gif" /></td>
 		<td >2 WGS points (測WGS)</td>
 		<td>
-<a onclick="placeOrder('ITEM0001','1遊戲幣',100 ,'1遊戲幣 = 2 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="placeOrder('ITEM0001','1遊戲幣',1 ,'1遊戲幣 = 2 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 	<tr>
 		<td style="text-align:right;">1000 <img src="gold.gif" /></td>

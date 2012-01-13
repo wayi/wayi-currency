@@ -108,7 +108,6 @@ function parse_signed_request($signed_request, $app_secret) {
 	$data = json_decode(base64_url_decode($payload), true);
 
 	if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
-		die('1');
 		error_log('Unknown algorithm. Expected HMAC-SHA256');
 		return null;
 	}
