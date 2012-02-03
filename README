@@ -1,6 +1,6 @@
 f8d currency example
-	version: 1.1.4
-	updated: 2012.1.11
+	version: 1.2.0
+	updated: 2012.2.1
 	created: 2012.1.2
 
 files
@@ -8,3 +8,7 @@ files
 	-callback.php		//providing item information and handling transaction
 	-php-sdk/src/fun.php 	//f8d php-sdk
 	-gold.gif		//don't care
+
+
+change log
+	1.2	add card currency
