@@ -1,7 +1,7 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', '411');
-define('APP_SECRET', '33f2c72705bfaabbef82b142a489412c');
+define('APP_ID', '444');
+define('APP_SECRET', '88be0fc9a129121d6743f6d49d2d30a5');
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -28,8 +28,8 @@ if($session){
 <html>
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
-	<!--<script type="text/javascript" src="../webapi/assets/jqplugin/f8d.js?v=12235"></script>-->
+	<!--<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>-->
+	<script type="text/javascript" src="../webapi/assets/jqplugin/f8d.js?v=12235"></script>
 
 </head>
 <body>
@@ -61,16 +61,11 @@ $(function(){
 	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
 });	
 //place an order
-function placeOrder(itemid,title, price, desc , img_url, product_url) {
+function placeOrder(itemid,title, price) {
 	// Only send param data for sample. These parameters should be set
 	// in the callback.
 	var order_info = {
-		itemid: itemid,
-			"title":title,
-			"description":desc,
-			"price":price,
-			"image_url":img_url,
-			"product_url":product_url
+		itemid: itemid
 	};
 
 	// calling the API ...

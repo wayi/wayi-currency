@@ -2,8 +2,8 @@
 /*
  * title: fun.php
  * author: kevyu
- * version: v1.4.3
- * updated: 2011/12/21 d
+ * version: v1.5.0
+ * updated: 2011/1/12 
  */
 include 'Fb.php';
 ob_start();	//or FirePHP will failed

@@ -17,7 +17,7 @@
  */
 
 // Enter your app information below
-$app_secret = '33f2c72705bfaabbef82b142a489412c';
+$app_secret = '88be0fc9a129121d6743f6d49d2d30a5';
 
 // Prepare the return data array
 $data = array('content' => array());
@@ -54,6 +54,34 @@ if ($func == 'payments_completed') {
 	$orderid = $payload['orderid'];
 	$data['content']['orderid'] = $orderid;
 
+} else if ($func == 'payments_get_gamecash') {
+	//for openid
+	//$credits['login_type'] refer to user's login account type('facebook','google','msn',...)
+	//$credits['type'] refer to ('money','wgs')
+	$credits = json_decode(stripcslashes($payload),true);
+	$credit = (int)$credits['credits'];
+	if($credits['type'] == 'money'){
+		//pay with money
+		$cash_info = array(
+			'rate'		=> 2,
+			'gamecash'	=> $credit * 2, 
+			'unit'		=> 'money',
+			'unit_image'	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
+		);
+	}else if($credits['type'] == 'wgscard'){
+		//pay with wgs points
+		$cash_info = array(
+			'rate'		=>3,
+			'gamecash'	=> $credit * 3, 
+			'unit'		=>'coco',
+			//'unit_image'	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
+		);
+	}
+
+	if(!isset($cash_info)){
+		die(make_error_report(sprintf ('get ratio failed. content:%s',$payload )));
+	}
+	$data['content'] = $cash_info;
 } else if ($func == 'payments_get_items') {
 	// remove escape characters
 	$order_info = json_decode(stripcslashes($payload),true);
@@ -62,6 +90,7 @@ if ($func == 'payments_completed') {
 	// reference and then query your internal DB for the proper 
 	// information. Then set the item information here to be 
 	// returned to facebook then shown to the user for confirmation.
+
 	$items = array(
 		'ITEM0001'	=> array(
 			'itemid'	=> 'ITEM0001',
