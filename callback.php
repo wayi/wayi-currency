@@ -17,7 +17,7 @@
  */
 
 // Enter your app information below
-$app_secret = '33f2c72705bfaabbef82b142a489412c';
+$app_secret = '4c18b0e2186ec6280d06df970c0dbfa6';
 
 // Prepare the return data array
 $data = array('content' => array());
@@ -68,6 +68,7 @@ if ($func == 'payments_completed') {
 			'title' 	=> '1遊戲幣(測WGS)',
 			'price' 	=> 2,
 			'description' 	=> '1遊戲幣 = 2 WGS',
+			'note' 		=> 'server info',
 			'image_url' 	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
 			'product_url' 	=> 'http://www.facebook.com/images/gifts/21.png',
 		),
