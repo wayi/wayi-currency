@@ -2,8 +2,8 @@
 /*
  * title: fun.php
  * author: kevyu
- * version: v1.5.0
- * updated: 2011/1/12 
+ * version: v2.0.0
+ * updated: 2011/2/8 
  */
 include 'Fb.php';
 ob_start();	//or FirePHP will failed
@@ -18,12 +18,12 @@ if (!function_exists('json_decode')) {
 
 class FUN
 {
-	const API_VERSION = '1.5.0';
+	const API_VERSION = '2.0.0';
 	/**
 	 * API_URL
 	 */
-	const API_URL_PRODUCTION = 'http://api.fun.wayi.com.tw/';
-	const API_URL_TESTING = 'http://apitest.fun.wayi.com.tw/';
+	const API_URL = 'http://api.fun.wayi.com.tw/';
+	const URL_GAME_MALL = 'http://gamemall.wayi.com.tw/shopping/default.asp?action=wgs_list'; 
 	private $API_URL;
 	protected $testing = false;
 
@@ -38,13 +38,19 @@ class FUN
 
 	private $logger;
 	public function __construct($config) {
-		$this->logger = FirePHP::getInstance(true);
+		$this->logger = new Fb();
+		$this->logger->setEnabled(false);
+		if(true || isset($config['debugging']) && $config['debugging'])
+			$this->logger->setEnabled(true);
+
 		$this->logger->info(sprintf('%s start fun php-sdk(%s) ...',date('Y-m-d H:i:s '), self::API_VERSION));
 
 		//parameters
 		$this->config = $config;
 		$this->setAppId($config['appId']);
 		$this->setApiSecret($config['secret']);
+
+		$this->API_URL = $this->getAppEnv(); 
 		if(!$this->setRedirectUri($config['redirect_uri']))
 			die('redirect uri is invalid');	
 
@@ -54,19 +60,29 @@ class FUN
 			$this->keepCookie = false;
 		}
 
-		if(isset($config['testing']) && $config['testing']){
-			$this->logger->info('it is testing');
-			$this->testing = true;
-			$this->API_URL = self::API_URL_TESTING;
-		}else{
-			$this->API_URL = self::API_URL_PRODUCTION;
-		}
 
 		//afeter testing parameter is read
 		if(isset($_GET['logout']))
 			$this->logout();
 
 	}
+	private function getAppEnv(){		
+		$url = sprintf('%sdispatcher/%d',self::API_URL, $this->appId);
+		//$url = 'http://10.0.2.106/kevyu/api/webapi/dispatcher/' . $this->appId;
+		$params = array(
+			'sdk'		=> 'php-sdk',
+			'version'	=> self::API_VERSION
+		);
+		$app_env = $this->makeRequest($url, $params, $method="GET"); 
+			
+		$app_env = json_decode($app_env, true);
+		if(isset($app_env['env']) && $app_env['env'] == 'testing'){
+			$this->logger->warn('it is under testing');
+			$this->testing = true;
+		}
+		return $app_env['api'];
+	}
+
 
 	/*
 	 *	getter & setter
@@ -262,7 +278,7 @@ class FUN
 	}
 
 	public function getGameMallUrl(){
-		return 'http://gamemall.wayi.com.tw/shopping/default.asp?action=wgs_list'; 
+		return self::URL_GAME_MALL;
 	}	
 
 	/**
