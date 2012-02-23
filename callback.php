@@ -55,12 +55,9 @@ if ($func == 'payments_completed') {
 	$data['content']['orderid'] = $orderid;
 
 } else if ($func == 'payments_get_gamecash') {
-	//for openid
-	//$credits['login_type'] refer to user's login account type('facebook','google','msn',...)
-	//$credits['type'] refer to ('money','wgs')
+	//some payment method can't save in wgs, so need to save all into game cash
 	$credits = json_decode(stripcslashes($payload),true);
 	$credit = (int)$credits['credits'];
-	if($credits['type'] == 'money'){
 		//pay with money
 		$cash_info = array(
 			'rate'		=> 2,
@@ -68,16 +65,6 @@ if ($func == 'payments_completed') {
 			'unit'		=> 'money',
 			'unit_image'	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
 		);
-	}else if($credits['type'] == 'wgscard'){
-		//pay with wgs points
-		$cash_info = array(
-			'rate'		=>3,
-			'gamecash'	=> $credit * 3, 
-			'unit'		=>'coco',
-			//'unit_image'	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
-		);
-	}
-
 	if(!isset($cash_info)){
 		die(make_error_report(sprintf ('get ratio failed. content:%s',$payload )));
 	}
@@ -96,7 +83,8 @@ if ($func == 'payments_completed') {
 			'itemid'	=> 'ITEM0001',
 			'title' 	=> '1遊戲幣(測WGS)',
 			'price' 	=> 2,
-			'description' 	=> '1遊戲幣 = 2 WGS',
+			'gamecash'	=> 1,
+			'description' 	=> '2WGS = 1遊戲幣',
 			'image_url' 	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
 			'product_url' 	=> 'http://www.facebook.com/images/gifts/21.png',
 		),
@@ -104,7 +92,8 @@ if ($func == 'payments_completed') {
 			'itemid'	=> 'ITEM0002',
 			'title' 	=> '1000遊戲幣(測餘額不足)',
 			'price' 	=>  1000,
-			'description' 	=> '1遊戲幣 = 1 WGS',
+			'gamecash'	=> 1000,
+			'description' 	=> '1WGS = 1遊戲幣',
 			'image_url' 	=> 'http://10.0.2.106/kevyu/api/currency/gold.gif',
 			'product_url' 	=> 'http://www.facebook.com/images/gifts/21.png',
 		)
