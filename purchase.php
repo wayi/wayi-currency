@@ -10,7 +10,8 @@ include 'php-sdk/src/fun.php';
 $config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php'
+	'redirect_uri'  => 'YOUR_REDIRECT_URI',
+	'debugging'	=> false
 );
 //3.實體化
 $fun = new FUN($config);
@@ -20,6 +21,7 @@ $session = $fun->getSession();
 if($session){
 //	$fun->api('v1/me/user');
 	define('ACCESS_TOKEN', $fun->getAccessToken());
+	$fun->api('v1/me/user');
 } else {
 	die('<a href="'.$fun->getLoginUrl($config['redirect_uri']).'">login F8D</a>');
 }
@@ -28,8 +30,7 @@ if($session){
 <html>
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<!--<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>-->
-	<script type="text/javascript" src="../webapi/assets/jqplugin/f8d.js?v=12235"></script>
+	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
 
 </head>
 <body>
