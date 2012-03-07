@@ -17,7 +17,7 @@
  */
 
 // Enter your app information below
-$app_secret = '88be0fc9a129121d6743f6d49d2d30a5';
+$app_secret = 'YOUR_APP_SECRET';
 
 // Prepare the return data array
 $data = array('content' => array());
@@ -77,7 +77,6 @@ if ($func == 'payments_completed') {
 	// reference and then query your internal DB for the proper 
 	// information. Then set the item information here to be 
 	// returned to facebook then shown to the user for confirmation.
-
 	$items = array(
 		'ITEM0001'	=> array(
 			'itemid'	=> 'ITEM0001',
