@@ -42,27 +42,29 @@ if($session){
 		<td style="text-align:right;">1 <img src="gold.gif" /></td>
 		<td >2 WGS points (測WGS)</td>
 		<td>
-<a onclick="placeOrder('ITEM0001','1遊戲幣',1 ,'1遊戲幣 = 2 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="place_order('ITEM0001'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 	<tr>
 		<td style="text-align:right;">1000 <img src="gold.gif" /></td>
 		<td>1000 WGS points (測餘額不足)</td>
 		<td>
-<a onclick="placeOrder('ITEM0002','1000遊戲幣',1000, '1 遊戲幣 = 1 WGS', 'http://10.0.2.106/kevyu/api/currency/gold.gif',''); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="placeOrder('ITEM0002'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 
 </table>
 <link rel="stylesheet" type="text/css" href="http://api.fun.wayi.com.tw/assets/socialplugin/css/fun_share.css">
   </form>
+<input value="其他付費管道" type="button" onclick="javascript:select_pay_method();">
 <hr>
 <div id="output"></div>
-
 <script type="text/javascript">
 $(function(){
 	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
 });	
+
+		    
 //place an order
-function placeOrder(itemid,title, price) {
+function place_order(itemid) {
 	// Only send param data for sample. These parameters should be set
 	// in the callback.
 	var order_info = {
@@ -72,12 +74,26 @@ function placeOrder(itemid,title, price) {
 	// calling the API ...
 	var obj = {
 		method: 'pay',
-			order_info: order_info,
-			purchase_type: 'wgs'
+		order_info: order_info,
 	};
 
 
 	$('body').F8D.ui(obj, callback);
+}
+
+function select_pay_method(){
+	var order_info = {
+	};
+
+	// calling the API ...
+	var obj = {
+		method: 'select_pay_method',
+		order_info: order_info,
+	};
+
+
+	$('body').F8D.ui(obj, callback);
+
 }
 
 function callback(data){

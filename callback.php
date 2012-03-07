@@ -77,7 +77,6 @@ if ($func == 'payments_completed') {
 	// reference and then query your internal DB for the proper 
 	// information. Then set the item information here to be 
 	// returned to facebook then shown to the user for confirmation.
-
 	$items = array(
 		'ITEM0001'	=> array(
 			'itemid'	=> 'ITEM0001',
