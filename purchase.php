@@ -1,7 +1,7 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', 'YOUR_APP_ID');
-define('APP_SECRET', 'YOUR_APP_SECRET');
+define('APP_ID', '443');
+define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -10,7 +10,7 @@ include 'php-sdk/src/fun.php';
 $config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => 'YOUR_REDIRECT_URI',
+	'redirect_uri'  => 'http://api.fun.wayi.com.tw/example/currency/purchase.php',
 	'debugging'	=> false
 );
 //3.實體化
@@ -48,7 +48,7 @@ if($session){
 		<td style="text-align:right;">1000 <img src="gold.gif" /></td>
 		<td>1000 WGS points (測餘額不足)</td>
 		<td>
-<a onclick="placeOrder('ITEM0002'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="place_order('ITEM0002'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 
 </table>
@@ -74,7 +74,7 @@ function place_order(itemid) {
 	// calling the API ...
 	var obj = {
 		method: 'pay',
-		order_info: order_info,
+		order_info: order_info
 	};
 
 
@@ -88,7 +88,7 @@ function select_pay_method(){
 	// calling the API ...
 	var obj = {
 		method: 'select_pay_method',
-		order_info: order_info,
+		order_info: order_info
 	};
 
 

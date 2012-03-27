@@ -42,6 +42,7 @@ class FUN
 	public function __construct($config) {
 		$this->logger = new Fb();
 		$this->logger->setEnabled(false);
+		date_default_timezone_set('Asia/Taipei');
 		if(true || isset($config['debugging']) && $config['debugging'])
 			$this->logger->setEnabled(true);
 
