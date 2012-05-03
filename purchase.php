@@ -1,6 +1,6 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', 'YOUR_APP_ID');
+define('APP_ID', 'YOUR_APPID');
 define('APP_SECRET', 'YOUR_APP_SECRET');
 
 //1.include
@@ -10,7 +10,7 @@ include 'php-sdk/src/fun.php';
 $config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => 'YOUR_REDIRECT_URI',
+	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php',
 	'debugging'	=> false
 );
 //3.實體化
@@ -31,7 +31,6 @@ if($session){
 	<head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
-
 </head>
 <body>
 <h1>Wayi金流 儲值遊戲幣範例</h1>
@@ -48,7 +47,7 @@ if($session){
 		<td style="text-align:right;">1000 <img src="gold.gif" /></td>
 		<td>1000 WGS points (測餘額不足)</td>
 		<td>
-<a onclick="placeOrder('ITEM0002'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
+<a onclick="place_order('ITEM0002'); return false;" type="button" name="fun_share" class="fun_share_button">Pay with F8D</a>
 	</tr>
 
 </table>
@@ -68,7 +67,8 @@ function place_order(itemid) {
 	// Only send param data for sample. These parameters should be set
 	// in the callback.
 	var order_info = {
-		itemid: itemid
+		itemid: itemid,
+		test: 'testdata1'
 	};
 
 	// calling the API ...
@@ -83,6 +83,7 @@ function place_order(itemid) {
 
 function select_pay_method(){
 	var order_info = {
+		test: 'testdata2'
 	};
 
 	// calling the API ...
