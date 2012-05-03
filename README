@@ -1,6 +1,6 @@
 f8d currency example
 	version: 2.0.0
-	updated: 2012.3.20
+	updated: 2012.5.3
 	created: 2012.1.2
 
 files
@@ -11,6 +11,6 @@ files
 
 
 change log
-	2.0
-		extract gamecash completed 
+	2.0	remove payments_get_gamecash
+	1.3	add gamecash
 	1.2	add card currency

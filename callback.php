@@ -9,12 +9,15 @@
  *			- payments_completed
  *	2.exchange gamecash
  *		related func name are
+<<<<<<< HEAD
  *			-payments_get_gamecash
+=======
+>>>>>>> gamecash
  *			-payments_gamecash_completed
  */
 
 //1.Enter your app information below
-$app_secret = '4c18b0e2186ec6280d06df970c0dbfa6';
+$app_secret = 'YOUR_APP_SECRET';
 
 //2.Prepare the return data array
 $data = array('content' => array());
@@ -37,25 +40,33 @@ if ($func == 'payments_completed') {
 	$payload = json_decode(stripcslashes($payload),true);
 	// Grab the order status
 	$status = $payload['status'];
+
 	// Write your apps logic here for validating and recording a
 	// purchase here.
-	//
-	// Generally you will want to move states from `placed` -> `settled`
-	// here, then grant the purchasing user's in-game item to them.
-	if ($status == 'placed') {
-		$next_state = 'settled';
-		$data['content']['status'] = $next_state;
-	}
+	$success = true;
+	if($success){
+		// Generally you will want to move states from `placed` -> `settled`
+		// here, then grant the purchasing user's in-game item to them.
+		if ($status == 'placed') {
+			$next_state = 'settled';
+			$data['content']['status'] = $next_state;
+		}
 
-	// Compose returning data array_change_key_case
-	$orderid = $payload['orderid'];
-	$data['content']['orderid'] = $orderid;
+		// Compose returning data array_change_key_case
+		$orderid = $payload['orderid'];
+		$data['content']['orderid'] = $orderid;
+	}else{
+		die(make_error_report('月維護', 501)); //you can defined your own error message
+	}
 
 } else if ($func == 'payments_get_items') {
 	// remove escape characters
 	$order_info = json_decode(stripcslashes($payload),true);
 
-	//item list
+	// Per the credits api documentation, you should pass in an item
+	// reference and then query your internal DB for the proper
+	// information. Then set the item information here to be
+	// returned to facebook then shown to the user for confirmation.
 	$items = array(
 		'ITEM0001' => array(
 			'itemid' => 'ITEM0001',
@@ -63,7 +74,8 @@ if ($func == 'payments_completed') {
 			'price' => 2,
 			'gamecash' => 1,
 			'description' => '2WGS = 1遊戲幣',
-			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif'
+			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif',
+			'product_url' => 'http://www.facebook.com/images/gifts/21.png',
 		),
 		'ITEM0002' => array(
 			'itemid' => 'ITEM0002',
@@ -71,7 +83,8 @@ if ($func == 'payments_completed') {
 			'price' => 1000,
 			'gamecash' => 1000,
 			'description' => '1WGS = 1遊戲幣',
-			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif'
+			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif',
+			'product_url' => 'http://www.facebook.com/images/gifts/21.png',
 		)
 
 	);
@@ -84,22 +97,7 @@ if ($func == 'payments_completed') {
 	// Put the associate array of item details in an array, and return in the
 	// 'content' portion of the callback payload.
 	$data['content'] = $items[$itemid];
-} else if ($func == 'payments_get_gamecash') {
-	//some payment method can't save in wgs, so need to save all into game cash
-	$credits = json_decode(stripcslashes($payload),true);
-	$credit = (int)$credits['credits'];
-	//pay with money
-	$cash_info = array(
-		'rate' => 2,
-		'gamecash' => $credit * 2,
-		'unit' => 'money',
-		'unit_image' => 'http://10.0.2.106/kevyu/api/currency/gold.gif',
-	);
-	if(!isset($cash_info)){
-		die(make_error_report(sprintf ('get ratio failed. content:%s',$payload )));
-	}
-	$data['content'] = $cash_info;
-} else if ($func == 'payments_gamecash_completed') {
+}else if ($func == 'payments_gamecash_completed') {
 	$payload = json_decode(stripcslashes($payload),true);
 	// Grab the order status
 	$status = $payload['status'];
