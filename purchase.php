@@ -1,17 +1,17 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', 'YOUR_APP_ID');
-define('APP_SECRET', 'YOUR_APP_SECRET');
-define('REDIRECT_URI', 'YOUR_GAME_URL');
+define('APP_ID', '443');
+define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
+define('REDIRECT_URI', 'http://10.0.2.106/kevyu/api/currency/purchase.php');
 
 //1.include
 include 'php-sdk/src/fun.php';
 
 //2.基本設定
 $config = array(
-	'appId'  	=> APP_ID,                                 //your app id
-	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => REDIRECT_URI,
+	'appId'  	=> APP_ID,		//your app id
+	'secret' 	=> APP_SECRET,		//your app secret
+	'redirect_uri'  => REDIRECT_URI,	//you game url
 	'debugging'	=> false
 );
 //3.實體化
