@@ -1,7 +1,8 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', 'YOUR_APPID');
+define('APP_ID', 'YOUR_APP_ID');
 define('APP_SECRET', 'YOUR_APP_SECRET');
+define('REDIRECT_URI', 'YOUR_GAME_URL');
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -10,7 +11,7 @@ include 'php-sdk/src/fun.php';
 $config = array(
 	'appId'  	=> APP_ID,                                 //your app id
 	'secret' 	=> APP_SECRET,
-	'redirect_uri'  => 'http://10.0.2.106/kevyu/api/currency/purchase.php',
+	'redirect_uri'  => REDIRECT_URI,
 	'debugging'	=> false
 );
 //3.實體化
@@ -104,13 +105,15 @@ function callback(data){
 			+ "<b>Order ID: </b>" + data['orderid'] + "</br>"
 			+ "<b>Status: </b>" + data['status'] + "</br>"
 			+ "<b>All Info: </b>" + JSON.stringify(data));
-	} else if (data['error_code']) {
+	} else if (data.error_code) {
 		writeback("Transaction Failed! </br></br>"
 			+ "Error message returned from F8D:</br>"
-			+ data['error_message']);
+			+ "<b>Error code: </b>" + data['error_code'] + '<br/>'
+			+ "<b>Error Message: </b>" + data['error_message'] + '<br/>'
+			+ "<b>All Info: </b>" + JSON.stringify(data));
 	} else {
 		writeback("Transaction failed! </br>"
-			+ JSON.stringify(data)
+			+ JSON.stringify(data.error_message)
 		);
 	}
 }
