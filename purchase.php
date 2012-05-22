@@ -1,8 +1,9 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
 <?php
 //Enter your APP ID below
-define('APP_ID', '443');
-define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
-define('REDIRECT_URI', 'http://10.0.2.106/kevyu/api/currency/purchase.php');
+define('APP_ID', 'YOUR_APP_ID');
+define('APP_SECRET', 'YOUR_APP_SECRET');
+define('REDIRECT_URI', 'YOUR_GAME_URL');
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -33,7 +34,7 @@ if($session){
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110001"></script>
 </head>
-<body>
+<body onresize="resize();">
 <h1>Wayi金流 儲值遊戲幣範例</h1>
 <table border=1>
 	<caption>儲值金額</caption>
@@ -54,12 +55,16 @@ if($session){
 </table>
 <link rel="stylesheet" type="text/css" href="http://api.fun.wayi.com.tw/assets/socialplugin/css/fun_share.css">
   </form>
+<br/>
 <input value="其他付費管道" type="button" onclick="javascript:select_pay_method();">
 <hr>
-<div id="output"></div>
+Reply
+<div id="output" style="border:1px solid;background-color:#FFFFCC;height:200px;"></div>
 <script type="text/javascript">
 $(function(){
 	$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
+	//resize
+	 $(this).fun.iframe.setAutoResize();
 });	
 
 		    
@@ -123,6 +128,6 @@ function writeback(str) {
 }
 
 </script>
-<hr>
+<br/>
 </body>
 </html>
