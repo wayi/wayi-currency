@@ -9,10 +9,6 @@
  *			- payments_completed
  *	2.exchange gamecash
  *		related func name are
-<<<<<<< HEAD
- *			-payments_get_gamecash
-=======
->>>>>>> gamecash
  *			-payments_gamecash_completed
  */
 
@@ -156,7 +152,7 @@ function make_error_report($message, $code = 500){
 	return json_encode(array(
 		'error' => array(
 			'code' => $code,
-			'msg' => $message
+			'message' => $message
 		)
 	));
 }
