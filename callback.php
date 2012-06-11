@@ -70,8 +70,7 @@ if ($func == 'payments_completed') {
 			'price' => 2,
 			'gamecash' => 1,
 			'description' => '2WGS = 1遊戲幣',
-			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif',
-			'product_url' => 'http://www.facebook.com/images/gifts/21.png',
+			'image_url' => 'http://10.0.2.106/kevyu/projects/developer/currency/gold.gif',
 		),
 		'ITEM0002' => array(
 			'itemid' => 'ITEM0002',
@@ -79,8 +78,7 @@ if ($func == 'payments_completed') {
 			'price' => 1000,
 			'gamecash' => 1000,
 			'description' => '1WGS = 1遊戲幣',
-			'image_url' => 'http://10.0.2.106/kevyu/api/currency/gold.gif',
-			'product_url' => 'http://www.facebook.com/images/gifts/21.png',
+			'image_url' => 'http://10.0.2.106/kevyu/projects/developer/currency/gold.gif'
 		)
 
 	);
