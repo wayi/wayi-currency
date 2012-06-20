@@ -81,7 +81,7 @@ function place_order(itemid) {
 
 	// calling the API ...
 	var obj = {
-		method: 'pay',
+		method: 'payment_product_mode',
 		order_info: order_info
 	};
 
@@ -96,7 +96,7 @@ function select_pay_method(){
 
 	// calling the API ...
 	var obj = {
-		method: 'select_pay_method',
+		method: 'payment_gamecash_mode',
 		order_info: order_info
 	};
 
