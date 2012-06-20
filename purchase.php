@@ -1,8 +1,8 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', '443');
-define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
-define('REDIRECT_URI', 'http://10.0.2.106/kevyu/api/currency/purchase.php');
+define('APP_ID', 'YOUR_APPID');
+define('APP_SECRET', 'YOUR_APP_SECRET');
+define('REDIRECT_URI', 'YOUR_REDIRECT_URI');
 
 //1.include
 include 'php-sdk/src/fun.php';

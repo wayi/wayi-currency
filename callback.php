@@ -13,7 +13,7 @@
  */
 
 //1.Enter your app information below
-$app_secret = '4c18b0e2186ec6280d06df970c0dbfa6';
+$app_secret = 'YOUR_APP_SECRET';
 
 //2.Prepare the return data array
 $data = array('content' => array());
@@ -44,6 +44,9 @@ if ($func == 'payments_completed') {
 		// Generally you will want to move states from `placed` -> `settled`
 		// here, then grant the purchasing user's in-game item to them.
 		if ($status == 'placed') {
+			//give item here
+
+			//confirm transcation
 			$next_state = 'settled';
 			$data['content']['status'] = $next_state;
 		}
@@ -95,14 +98,16 @@ if ($func == 'payments_completed') {
 	$payload = json_decode(stripcslashes($payload),true);
 	// Grab the order status
 	$status = $payload['status'];
+
 	// Write your apps logic here for validating and recording a
 	// Generally you will want to move states from `placed` -> `settled`
-	// here, then grant the purchasing user's in-game item to them.
 	if ($status == 'placed') {
+		//give gamecash here
+		$makeup = $payload['makeup'];
+
+		//confirm transcation
 		$next_state = 'settled';
 		$data['content']['status'] = $next_state;
-
-		$makeup = $payload['makeup'];
 	}
 
 	// Compose returning data array_change_key_case
