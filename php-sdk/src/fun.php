@@ -2,8 +2,8 @@
 /*
  * title: fun.php
  * author: kevyu
- * version: v2.0.1
- * updated: 2011/2/16 
+ * version: v2.0.3
+ * updated: 2012/6/25 
  */
 include 'Fb.php';
 ob_start();	//or FirePHP will failed
@@ -20,7 +20,17 @@ if(!isset($_SESSION))
 
 class FUN
 {
-	const API_VERSION = '2.0.2';
+	const API_VERSION = '2.0.3';
+
+	//error code
+
+	const GET_ENV_SERVER_NOT_RESPONSE = 1000;
+	const INIT_APPID_IS_NOT_SET = 2000;
+	const INIT_APPID_IS_NOT_A_NUMBER = 2001;
+	const INIT_APP_SECRET_INVALID = 2002;
+
+	const GET_ENV_INVALID_JSON_FORMAT = 2101;
+	const GET_ENV_RESPONSE_INVALID_FORMAT = 2102;
 	/**
 	 * API_URL
 	 */
@@ -43,15 +53,14 @@ class FUN
 		$this->logger = new Fb();
 		$this->logger->setEnabled(false);
 		date_default_timezone_set('Asia/Taipei');
+
 		if(true || isset($config['debugging']) && $config['debugging'])
 			$this->logger->setEnabled(true);
 
 		$this->logger->info(sprintf('%s start fun php-sdk(%s) ...',date('Y-m-d H:i:s '), self::API_VERSION));
 
 		//parameters
-		$this->config = $config;
-		$this->setAppId($config['appId']);
-		$this->setApiSecret($config['secret']);
+		$this->setConfig($config);	
 
 		$this->API_URL = $this->getAppEnv(); 
 		if(!$this->setRedirectUri($config['redirect_uri']))
@@ -69,9 +78,43 @@ class FUN
 			$this->logout();
 
 	}
+
+	private function setConfig($config){
+		//precondition
+		if(!isset($config['appId'])){
+			$e = new ApiException(array(
+				'error_code' => self::INIT_APPID_IS_NOT_SET,
+				'error_description'=> 'appid is not set.')
+			);
+
+			throw $e;
+		}
+		if(!is_int($config['appId'])){
+			$e = new ApiException(array(
+				'error_code' => self::INIT_APPID_IS_NOT_A_NUMBER,
+				'error_description'=> 'appid is not a number.')
+			);
+
+			throw $e;
+		}
+
+		if(!isset($config['secret'])){
+			$e = new ApiException(array(
+				'error_code' => self::INIT_APP_SECRET_INVALID,
+				'error_description'=> 'app secret is invalid.')
+			);
+
+			throw $e;
+		}
+
+
+		$this->config = $config;
+		$this->setAppId($config['appId']);
+		$this->setApiSecret($config['secret']);
+	}
+
 	private function getAppEnv(){		
 		$url = sprintf('%sdispatcher/%d',self::URL_API, $this->appId);
-		//$url = 'http://10.0.2.106/kevyu/api/webapi/dispatcher/' . $this->appId;
 		$params = array(
 			'sdk'		=> 'php-sdk',
 			'version'	=> self::API_VERSION
@@ -79,11 +122,29 @@ class FUN
 		$app_env = $this->makeRequest($url, $params, $method="GET"); 
 			
 		$app_env = json_decode($app_env, true);
+		if(!is_array($app_env)){
+			$e = new ApiException(array(
+				'error_code' => self::GET_ENV_INVALID_JSON_FORMAT,
+				'error_description'=> 'Invalid json format.')
+			);
+
+			throw $e;
+		}
+
+
+		if(isset($app_env['error'])){
+			$e = new ApiException( array(
+				'error_code' => $app_env['error']['code'],
+				'error_description'=> $app_env['error']['message'])
+			);
+			throw $e;
+		}
+
 
 		if(!isset($app_env['api'])){
 			$e = new ApiException(array(
-				'error_code' => '2000',
-				'error_description'=> 'connect to f8d api server failed.')
+				'error_code' => self::GET_ENV_RESPONSE_INVALID_FORMAT,
+				'error_description'=> 'server reponse invalid format.')
 			);
 
 			throw $e;

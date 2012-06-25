@@ -1,6 +1,6 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', '443');
+define('APP_ID', 443);
 define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
 define('REDIRECT_URI', 'http://10.0.2.106/kevyu/api/currency/purchase.php');
 
@@ -58,7 +58,7 @@ if($session){
 <input value="其他付費管道" type="button" onclick="javascript:select_pay_method();">
 <hr>
 Reply
-<div id="output" style="border:1px solid;background-color:#FFFFCC;height:800px;"></div>
+<div id="output" style="border:1px solid;background-color:#FFFFCC;height:300px;"></div>
 <script type="text/javascript">
 $(function(){
 	//$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
