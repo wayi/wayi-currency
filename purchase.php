@@ -1,8 +1,8 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', 443);
-define('APP_SECRET', '4c18b0e2186ec6280d06df970c0dbfa6');
-define('REDIRECT_URI', 'http://10.0.2.106/kevyu/api/currency/purchase.php');
+define('APP_ID', YOUR_APPID);
+define('APP_SECRET', YOUR_APP_SECRET);
+define('REDIRECT_URI', YOUR_REDIRECT_BACK_URI);
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -35,6 +35,8 @@ if($session){
 </head>
 <body>
 <h1>Wayi金流 儲值遊戲幣範例</h1>
+直接從玩家帳號扣除WGS點數，進而購買商品。 
+<h4>1.<a target="_blank" href="http://developers.fun.wayi.com.tw/guides/currency_sdk#商品模式(廠商實作介面)">商品模式</a></h4>
 <table border=1>
 	<caption>儲值金額</caption>
 	<th>遊戲幣</th><th>點數</th><th></th>
@@ -55,10 +57,12 @@ if($session){
 <link rel="stylesheet" type="text/css" href="http://api.fun.wayi.com.tw/assets/socialplugin/css/fun_share.css">
   </form>
 <br/>
-<input value="其他付費管道" type="button" onclick="javascript:select_pay_method();">
+<h4>2.<a target="_blank" href="http://developers.fun.wayi.com.tw/guides/currency_sdk#儲值模式(廠商實作介面)">儲值模式</a></h4>
+儲值模式提供直接儲值遊戲幣功能。User選擇儲值管道後，直接選擇兌換額度，並全部轉成遊戲幣，即不依附商品。<br/>
+<input value="儲值模式" type="button" onclick="javascript:gamecash_mode();">
 <hr>
 Reply
-<div id="output" style="border:1px solid;background-color:#FFFFCC;height:300px;"></div>
+<div id="output" style="border:1px solid;background-color:#FFFFCC;height:100px;"></div>
 <script type="text/javascript">
 $(function(){
 	//$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});
@@ -89,7 +93,7 @@ function place_order(itemid) {
 	$('body').F8D.ui(obj, callback);
 }
 
-function select_pay_method(){
+function gamecash_mode(){
 	var order_info = {
 		test: 'testdata2'
 	};
