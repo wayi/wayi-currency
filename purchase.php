@@ -1,8 +1,8 @@
 <?php
 //Enter your APP ID below
-define('APP_ID', YOUR_APPID);
+define('APP_ID', YOUR_APP_ID);
 define('APP_SECRET', YOUR_APP_SECRET);
-define('REDIRECT_URI', YOUR_REDIRECT_BACK_URI);
+define('REDIRECT_URI', YOUR_REDIRECT_URI);
 
 //1.include
 include 'php-sdk/src/fun.php';
@@ -62,7 +62,7 @@ if($session){
 <input value="儲值模式" type="button" onclick="javascript:gamecash_mode();">
 <hr>
 Reply
-<div id="output" style="border:1px solid;background-color:#FFFFCC;height:100px;"></div>
+<div id="output" style="border:1px solid;background-color:#FFFFCC;height:300px;"></div>
 <script type="text/javascript">
 $(function(){
 	//$('body').F8D.init({appid:"<?php echo APP_ID; ?>", access_token:"<?php echo ACCESS_TOKEN;?>"});

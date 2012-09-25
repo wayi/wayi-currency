@@ -407,10 +407,11 @@ class FUN
 	protected function makeRequest($url, $params, $method="GET") {
 		$ch = curl_init();
 		$opts = array(
-				CURLOPT_CONNECTTIMEOUT => 10,
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_TIMEOUT        => 60,
-				CURLOPT_USERAGENT      => 'funapi'
+				CURLOPT_CONNECTTIMEOUT 	=> 10,
+				CURLOPT_RETURNTRANSFER 	=> true,
+				CURLOPT_TIMEOUT        	=> 60,
+				CURLOPT_USERAGENT      	=> 'Fun Buddy',
+				CURLOPT_SSLVERSION	=> 3
 			     );
 
 		switch ($method) {
