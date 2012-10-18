@@ -30,8 +30,8 @@ if($session){
 ?>
 <html>
 	<head>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="http://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20120110002"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="https://api.fun.wayi.com.tw/assets/jqplugin/f8d.js?v=20121017"></script>
 </head>
 <body>
 <h1>Wayi金流 儲值遊戲幣範例</h1>
@@ -54,7 +54,7 @@ if($session){
 	</tr>
 
 </table>
-<link rel="stylesheet" type="text/css" href="http://api.fun.wayi.com.tw/assets/socialplugin/css/fun_share.css">
+<link rel="stylesheet" type="text/css" href="https://api.fun.wayi.com.tw/assets/socialplugin/css/fun_share.css">
   </form>
 <br/>
 <h4>2.<a target="_blank" href="http://developers.fun.wayi.com.tw/guides/currency_sdk#儲值模式(廠商實作介面)">儲值模式</a></h4>

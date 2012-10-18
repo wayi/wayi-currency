@@ -1,18 +1,18 @@
 ﻿<?php
 /*
  * title: fun.php
- * author: kevyu
- * version: v2.0.3
- * updated: 2012/6/25 
+ * author: maxint65535/kevyu
+ * version: v2.0.7
+ * updated: 2012/10/17 
  */
 include 'Fb.php';
 ob_start();	//or FirePHP will failed
 header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
 if (!function_exists('curl_init')) {
-	throw new Exception('FUN needs the CURL PHP extension.');
+	throw new Exception('F8D needs the CURL PHP extension.');
 }
 if (!function_exists('json_decode')) {
-	throw new Exception('FUN needs the JSON PHP extension.');
+	throw new Exception('F8D needs the JSON PHP extension.');
 }
 
 if(!isset($_SESSION)) 
@@ -20,10 +20,9 @@ if(!isset($_SESSION))
 
 class FUN
 {
-	const API_VERSION = '2.0.3';
+	const API_VERSION = '2.0.7';
 
 	//error code
-
 	const GET_ENV_SERVER_NOT_RESPONSE = 1000;
 	const INIT_APPID_IS_NOT_SET = 2000;
 	const INIT_APPID_IS_NOT_A_NUMBER = 2001;
@@ -31,10 +30,11 @@ class FUN
 
 	const GET_ENV_INVALID_JSON_FORMAT = 2101;
 	const GET_ENV_RESPONSE_INVALID_FORMAT = 2102;
+
 	/**
 	 * API_URL
 	 */
-	const URL_API = 'http://api.fun.wayi.com.tw/';
+	const URL_API = 'https://api.fun.wayi.com.tw/';
 	const URL_GAME_MALL = 'http://gamemall.wayi.com.tw/shopping/default.asp?action=wgs_list'; 
 	private $API_URL;
 	protected $testing = false;
@@ -89,7 +89,7 @@ class FUN
 
 			throw $e;
 		}
-		if(!is_int($config['appId'])){
+		if(!$this->isInt($config['appId'])){
 			$e = new ApiException(array(
 				'error_code' => self::INIT_APPID_IS_NOT_A_NUMBER,
 				'error_description'=> 'appid is not a number.')
@@ -196,6 +196,11 @@ class FUN
 		return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
 	}
 
+	function isInt($value)
+	{
+		return preg_match('/^[0-9]+$/', $value);
+	}
+
 	public function getRedirectUri() {
 		return $this->redirectUri;
 	}
@@ -271,23 +276,6 @@ class FUN
 		return true;
 	}
 
-
-	function isCurrencyMode(){
-		return isset($this->config['currency']);
-	}
-
-	function getCurrencyUrl(){
-		$this->logger->info('[getCurrencyUrl]get currency url');
-
-		//0.precondition
-		if(!$this->getCurrencySkey())
-			return $this->getLoginUrl();
-
-		$result = $this->Api('/v1/me/currency','GET',array('serial' => $this->getCurrencySkey()));
-
-		return $result;
-	}
-
 	/**
 	 * setup user status
 	 *
@@ -323,15 +311,12 @@ class FUN
 		//0.validate
 		$clean['redirect_uri'] = (isset($this->config['redirect_uri']))?$this->config['redirect_uri']:'';
 		$clean['scope'] =  (empty($this->config['scope']))?'':$this->config['scope'];
-		$clean['game_type'] = (isset($this->config['currency']) && isset($this->config['currency']['game_type']))?$this->config['currency']['game_type']:'';
 
-		//without currency, it will login by session or cookies
 		$params = array(
 				'response_type' => 'code',
 				'redirect_uri' => urlencode($clean['redirect_uri']),
 				'client_id' => urlencode($this->appId),
 				'scope' => urlencode($clean['scope']),
-				'currency' => urlencode($clean['game_type'])
 			       );
 		return $this->API_URL . "oauth/authorize?" .  http_build_query($params);
 	}
@@ -409,7 +394,7 @@ class FUN
 		$opts = array(
 				CURLOPT_CONNECTTIMEOUT 	=> 10,
 				CURLOPT_RETURNTRANSFER 	=> true,
-				CURLOPT_TIMEOUT        	=> 60,
+				CURLOPT_TIMEOUT       	=> 60,
 				CURLOPT_USERAGENT      	=> 'Fun Buddy',
 				CURLOPT_SSLVERSION	=> 3
 			     );
