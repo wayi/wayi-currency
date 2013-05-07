@@ -2,8 +2,8 @@
 /*
  * title: fun.php
  * author: maxint65535/kevyu
- * version: v2.0.7
- * updated: 2012/10/17 
+ * version: v2.1.0
+ * updated: 2013/05/07 
  */
 include 'Fb.php';
 ob_start();	//or FirePHP will failed
@@ -20,7 +20,7 @@ if(!isset($_SESSION))
 
 class FUN
 {
-	const API_VERSION = '2.0.7';
+	const API_VERSION = '2.1.0';
 
 	//error code
 	const GET_ENV_SERVER_NOT_RESPONSE = 1000;
@@ -34,7 +34,7 @@ class FUN
 	/**
 	 * API_URL
 	 */
-	const URL_API = 'https://api.fun.wayi.com.tw/';
+	const URL_API = 'http://api.funbuddy.com/';
 	const URL_GAME_MALL = 'http://gamemall.wayi.com.tw/shopping/default.asp?action=wgs_list'; 
 	private $API_URL;
 	protected $testing = false;

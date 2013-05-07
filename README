@@ -1,6 +1,6 @@
 f8d currency example
-	version: 2.0.2
-	updated: 2012.10.18
+	version: 2.1.0
+	updated: 2013.5.7
 	created: 2012.1.2
 
 files
@@ -11,6 +11,7 @@ files
 
 
 change log
+	2.1.0	[purchase.php] change api url to api.funbuddy.com, php sdk version use 2.1.0 
 	2.0.2	[purchase.php] support https, php sdk version use 2.0.7 
 	2.0.1	[purchase.php] enhance javascirpt callback reply
 	2.0	remove payments_get_gamecash
