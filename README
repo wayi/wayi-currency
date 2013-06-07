@@ -11,6 +11,7 @@ files
 
 
 change log
+	2.1.0	[callback.php] modify payments_get_items 
 	2.1.0	[purchase.php] change api url to api.funbuddy.com, php sdk version use 2.1.0 
 	2.0.2	[purchase.php] support https, php sdk version use 2.0.7 
 	2.0.1	[purchase.php] enhance javascirpt callback reply

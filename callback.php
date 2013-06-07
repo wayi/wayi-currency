@@ -87,13 +87,17 @@ if ($func == 'payments_completed') {
 	);
 
 	$itemid = $order_info['itemid'];
-	if(!isset($items[$itemid])){
-		die(make_error_report(sprintf ('item[%s] is not existed',$itemid )));
-	}
 
 	// Put the associate array of item details in an array, and return in the
 	// 'content' portion of the callback payload.
-	$data['content'] = $items[$itemid];
+	if(isset($items[$itemid])){
+		$data['content'] = $items[$itemid];
+	}else if(empty($itemid)){
+		$data['content'] = $items;
+	}else{
+		die(make_error_report(sprintf ('item[%s] is not existed',$itemid )));
+	}
+
 }else if ($func == 'payments_gamecash_completed') {
 	$payload = json_decode(stripcslashes($payload),true);
 	// Grab the order status
@@ -114,6 +118,9 @@ if ($func == 'payments_completed') {
 	//save
 	$orderid = $payload['orderid'];
 	$data['content']['orderid'] = $orderid;
+
+} else {
+	die(make_error_report(sprintf ('func[%s] is not existed',$func )));
 }
 
 
